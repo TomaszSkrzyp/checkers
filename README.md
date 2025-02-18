@@ -25,16 +25,20 @@ A terminal or command prompt
 
 **Compilation and running**
 
- IF NOT USING VISUAL STUDIO:
+ **IF NOT USING VISUAL STUDIO:**
+ 
 To compile the game, use the following command in the terminal:
 
- g++ -o checkers main.cpp checkers.cpp ai.cpp -std=c++11
+```sh
+g++ -o checkers main.cpp checkers.cpp ai.cpp -std=c++11g++ -o checkers main.cpp checkers.cpp ai.cpp -std=c++11
+```
  
 After compiling, run the executable with:
-
+```sh
  ./checkers
+```
 
- IF USING VISUAL STUDIO:
+ **IF USING VISUAL STUDIO:**
  
 Open the .sln File
 Double-click on the Checkers.sln file.
@@ -46,9 +50,9 @@ Click on the "Build Solution" (Shortcut: Ctrl + Shift + B).
 
 To choose which player is a computer and eventual level of computer, change values in game object constuctor in checkers.cpp inside main()
 EXAMPLE:
-
+```sh
   game(false,0,true,5);
-  
+```  
 This would make a game between a real player number 1 - white (false means not a computer) 
 and a computer player number 2 - black (true means a computer). The number that goes after boolean means eventual depth of a computer player
 In other words, how much turns(white and black) would the computer count ahead to choose wheter a checked move is good or bad. 
