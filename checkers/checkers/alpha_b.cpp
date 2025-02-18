@@ -1,5 +1,4 @@
 
-/*finding best move algorythm*/
 #include "alpha_beta.h"
 int alpha_beta::algorythm(std::unique_ptr<board>& b, int depth, int alpha, int beta) {
 	
@@ -37,7 +36,6 @@ int alpha_beta::algorythm(std::unique_ptr<board>& b, int depth, int alpha, int b
 				}
 			}
 
-			/*wycina mozliwosci ktore wiadomo ze nie bede lepsze od najlepszego dotychczas*/
 			if (alpha >= beta and depth < max_depth) {
 				while (!m_list.empty()) {
 					delete m_list.front();
@@ -79,7 +77,6 @@ int alpha_beta::algorythm(std::unique_ptr<board>& b, int depth, int alpha, int b
 				}
 			}
 
-			/*wycina mozliwosci ktore wiadomo ze nie bede lepsze od najlepszego dotychczas*/
 			if (alpha >= beta) {
 				while (!m_list.empty()) {
 					delete m_list.front();

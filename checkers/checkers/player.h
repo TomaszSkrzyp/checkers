@@ -3,132 +3,135 @@
 #include "command.h"
 #include <random>
 /// <summary>
-/// Abstrakcyjna klasa zawodnika, reprezentujaca gracza w grze.
+/// Abstract class representing a player in the game.
 /// </summary>
 class player_type {
 public:
 	/// <summary>
-	/// Wirtualna metoda czysto wirtualna, ktora musi byc zaimplementowana w klasach pochodnych.
-	/// Sluzy do wyboru ruchu z dostepnych ruchow.
+	/// A pure virtual method that must be implemented in derived classes.
+	/// Used to choose a move from the available moves.
 	/// </summary>
-	/// <param name="moves">Lista dostepnych ruchow.</param>
-	/// <param name="console">Referencja do obiektu kontrolujacego komendy.</param>
-	/// <returns>Wskaznik na wybrany ruch.</returns>
-	virtual move* choose_move( std::list<move*> moves, command_control& console) = 0;
+	/// <param name="moves">List of available moves.</param>
+	/// <param name="console">Reference to the object controlling the commands.</param>
+	/// <returns>A pointer to the selected move.</returns>
+	virtual move* choose_move(std::list<move*> moves, command_control& console) = 0;
 
 	/// <summary>
-	/// Wirtualny destruktor klasy bazowej, zapewniajacy poprawne niszczenie obiektow klas pochodnych.
+	/// Virtual destructor of the base class ensuring correct destruction of derived class objects.
 	/// </summary>
 	virtual ~player_type() {}
 };
 
 /// <summary>
-/// Klasa reprezentujaca gracza komputerowego, ktory wybiera ruch losowo.
-/// Dziedziczy po abstrakcyjnej klasie player_type.
+/// Class representing a computer player who chooses a move randomly.
+/// Inherits from the abstract player_type class.
 /// </summary>
 class random_comp : public player_type {
 	/// <summary>
-	/// Obiekt sluzacy do generowania losowych liczb.
+	/// Object used to generate random numbers.
 	/// </summary>
 	std::random_device move_choser;
 
 public:
 	/// <summary>
-	/// Metoda wybiera losowy ruch z dostepnych ruchow dla gracza komputerowego.
+	/// Method that selects a random move from the available moves for the computer player.
 	/// </summary>
-	/// <param name="moves">Lista dostepnych ruchow.</param>
-	/// <param name="console">Referencja do obiektu kontrolujacego komendy.</param>
-	/// <returns>Wskaznik na wybrany losowy ruch.</returns>
-	move* choose_move( std::list<move*> moves, command_control& console) override;
+	/// <param name="moves">List of available moves.</param>
+	/// <param name="console">Reference to the object controlling the commands.</param>
+	/// <returns>A pointer to the randomly selected move.</returns>
+	move* choose_move(std::list<move*> moves, command_control& console) override;
 
 };
+
 /// <summary>
-/// Klasa reprezentujaca inteligentnego gracza komputerowego, ktory podejmuje bardziej zaawansowane decyzje w wyborze ruchu. Dziedziczy po abstrakcyjnej klasie player_type.
+/// Class representing an intelligent computer player who makes more advanced decisions when choosing a move.
+/// Inherits from the abstract player_type class.
 /// </summary>
 class smart_computer : public player_type {
 
 public:
 	/// <summary>
-	/// Metoda wybiera ruch z dostepnych ruchow dla inteligentnego gracza komputerowego.
-	/// Implementacja tej metody powinna uwzgledniac strategie podejmowania decyzji przez komputer.
+	/// Method that selects a move from the available moves for the intelligent computer player.
+	/// The implementation of this method should take into account the strategy of decision-making by the computer.
 	/// </summary>
-	/// <param name="moves">Lista dostepnych ruchow.</param>
-	/// <param name="console">Referencja do obiektu kontrolujacego komendy.</param>
-	/// <returns>Wskaznik na wybrany ruch.</returns>
-	move* choose_move( std::list<move*> moves, command_control& console) override;
+	/// <param name="moves">List of available moves.</param>
+	/// <param name="console">Reference to the object controlling the commands.</param>
+	/// <returns>A pointer to the selected move.</returns>
+	move* choose_move(std::list<move*> moves, command_control& console) override;
 };
+
 /// <summary>
-/// Klasa reprezentujaca inteligentnego gracza komputerowego, ktory podejmuje decyzje na podstawie wejscia uzytkownika. Dziedziczy po abstrakcyjnej klasie player_type.
+/// Class representing a human player who makes decisions based on user input.
+/// Inherits from the abstract player_type class.
 /// </summary>
 class human_player : public player_type {
 
 public:
 	/// <summary>
-	/// Metoda definiuje w jaki sposob pobierane sa dane od uzytkownika.
+	/// Method defining how data is collected from the user.
 	/// </summary>
-	/// <param name="moves">Lista dostepnych ruchow.</param>
-	/// <param name="console">Referencja do obiektu kontrolujacego komendy.</param>
-	/// <returns>Wskaznik na wybrany ruch.</returns>
+	/// <param name="moves">List of available moves.</param>
+	/// <param name="console">Reference to the object controlling the commands.</param>
+	/// <returns>A pointer to the selected move.</returns>
 	move* choose_move(std::list<move*> moves, command_control& console) override;
 };
 
-
 /// <summary>
-/// Klasa reprezentujaca gracza w grze.
+/// Class representing a player in the game.
 /// </summary>
 class player {
-	char color; ///< Kolor gracza.
-	std::string name; ///< Nazwa gracza.
+	char color; ///< Player's color.
+	std::string name; ///< Player's name.
 
-	std::shared_ptr<player_type> p_type; ///< Wskaznik inteligentnego typu gracza.
+	std::shared_ptr<player_type> p_type; ///< Pointer to the player's type.
 
 public:
 	/// <summary>
-	/// Konstruktor domyslny.
+	/// Default constructor.
 	/// </summary>
 	player() = default;
 
 	/// <summary>
-	/// Konstruktor inicjalizujacy gracza z podanym kolorem i nazwa.
+	/// Constructor initializing the player with a given color and name.
 	/// </summary>
-	/// <param name="c">Kolor gracza.</param>
-	/// <param name="player_name">Nazwa gracza.</param>
+	/// <param name="c">Player's color.</param>
+	/// <param name="player_name">Player's name.</param>
 	player(char c, const std::string& player_name) : color(c), name(player_name) {
 	}
 
 	/// <summary>
-	/// Ustawia typ gracza na podany typ.
+	/// Sets the player's type to the given type.
 	/// </summary>
-	/// <param name="p_type">Wskaznik na obiekt typu gracza.</param>
+	/// <param name="p_type">Pointer to the player's type object.</param>
 	void set_type(std::shared_ptr<player_type> p_type) {
 		this->p_type = p_type;
 	}
 
 	/// <summary>
-	/// Wybiera ruch z listy dostepnych ruchow przy uzyciu zdefiniowanego typu gracza.
+	/// Chooses a move from the list of available moves using the defined player type.
 	/// </summary>
-	/// <param name="list">Lista dostepnych ruchow.</param>
-	/// <param name="console">Referencja do obiektu kontrolujacego komendy.</param>
-	/// <returns>Wskaznik na wybrany ruch.</returns>
+	/// <param name="list">List of available moves.</param>
+	/// <param name="console">Reference to the object controlling the commands.</param>
+	/// <returns>A pointer to the selected move.</returns>
 	move* choose_move(std::list<move*> list, command_control& console) {
-		// Zastepuje ruchy w konsoli dla tego gracza
+		// Replaces moves in the console for this player
 		console.replace_moves(list, color);
-		// Wybiera ruch przy uzyciu zdefiniowanego typu gracza
+		// Chooses a move using the defined player type
 		return p_type->choose_move(list, console);
 	}
 
 	/// <summary>
-	/// Zwraca nazwe gracza.
+	/// Returns the player's name.
 	/// </summary>
-	/// <returns>Nazwa gracza.</returns>
+	/// <returns>The player's name.</returns>
 	std::string get_name() {
 		return name;
 	}
 
 	/// <summary>
-	/// Ustawia nowa nazwe gracza.
+	/// Sets a new name for the player.
 	/// </summary>
-	/// <param name="new_name">Nowa nazwa gracza.</param>
+	/// <param name="new_name">New player's name.</param>
 	void set_name(std::string new_name) {
 		name = new_name;
 	}

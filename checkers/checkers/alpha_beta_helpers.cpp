@@ -40,7 +40,6 @@ bool alpha_beta::load_moves(std::list<move*>& moves, board_moves& move_finder, c
 	move_finder.avalilable_moves();
 	move_finder.update_moves(moves);
 	if (!moves.empty()) {
-		/*do wyrzycenia*/
 
 		return true;
 	}
@@ -51,7 +50,6 @@ bool alpha_beta::load_jump_moves(std::list<move*>& moves, board_jumps& jump_find
 	jump_finder.avalilable_jumps();
 	jump_finder.update_moves(moves);
 	if (!moves.empty()) {
-		/*do wyrzycenia*/
 		return true;
 	}
 	return false;

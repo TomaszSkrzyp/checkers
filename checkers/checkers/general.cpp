@@ -39,7 +39,6 @@ const void general::find_y_jumped(int& y_jumped, int xs, int ys, int yf) {
 
 	}
 }
-/*hashowanie skokow*/
 const int general::hashed_jump(int xs, int ys, int xj, int yj, int xf, int yf) {
 	return (xf + 1) * 10 + (yf + 1) * 1 + (xj + 1) * 1000 + (yj + 1) * 100 + (xs + 1) * 100000 + (ys + 1) * 10000;
 }

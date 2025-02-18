@@ -1,4 +1,3 @@
-
 #pragma once
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
@@ -11,82 +10,79 @@
 #include <chrono>
 
 /// <summary>
-/// Klasa reprezentujaca gre w warcaby.
-/// /// </summary>
+/// Class representing the checkers game.
+/// </summary>
 class game {
-            float score = 0; ///< Aktualny wynik gry
-            bool types[2]; ///< Typy graczy (prawda dla komputera, falsz dla czlowieka)
-            int level[2]; ///< Poziomy trudnosci graczy
-            player players[2]; ///< Tablica graczy
-            // Nested templated container class for game results
-            game_results_container<std::string> winners; ///< Kontener na wyniki gry (zwyciezcy)
-            game_results_container<int> game_lengths; ///< Kontener na dlugosci gier
+    float score = 0; ///< Current game score
+    bool types[2]; ///< Player types (true for computer, false for human)
+    int level[2]; ///< Difficulty levels of the players
+    player players[2]; ///< Array of players
+    // Nested templated container class for game results
+    game_results_container<std::string> winners; ///< Container for game results (winners)
+    game_results_container<int> game_lengths; ///< Container for game lengths
 
-            /// <summary>
-            /// Funkcja oceniajaca aktualny stan planszy.
-            /// </summary>
-            /// <param name="b">Obiekt planszy</param>
-            /// <returns>Wartosc oceny planszy</returns>
-            int evaluate_score(const board& b);
+    /// <summary>
+    /// Function that evaluates the current board state.
+    /// </summary>
+    /// <param name="b">Board object</param>
+    /// <returns>The board evaluation score</returns>
+    int evaluate_score(const board& b);
 
-            /// <summary>
-            /// Funkcja sprawdzajaca, czy dany pionek znajduje sie przy krawedzi planszy.
-            /// </summary>
-            /// <param name="i">Indeks wiersza</param>
-            /// <param name="j">Indeks kolumny</param>
-            /// <returns>Prawda, jesli pionek znajduje sie przy krawedzi, w przeciwnym razie falsz</returns>
-            bool on_wall(int i, int j);
+    /// <summary>
+    /// Function that checks if a given piece is on the edge of the board.
+    /// </summary>
+    /// <param name="i">Row index</param>
+    /// <param name="j">Column index</param>
+    /// <returns>True if the piece is on the edge, otherwise false</returns>
+    bool on_wall(int i, int j);
 
-            /// <summary>
-            /// Glowna petla gry.
-            /// </summary>
-            /// <param name="iscomp1">Czy pierwszy gracz jest komputerem</param>
-            /// <param name="iscomp2">Czy drugi gracz jest komputerem</param>
-            /// <param name="max_turn">Maksymalna liczba tur</param>
-            void main_loop(bool iscomp1, bool iscomp2, int max_turn);
+    /// <summary>
+    /// The main game loop.
+    /// </summary>
+    /// <param name="iscomp1">Is the first player a computer?</param>
+    /// <param name="iscomp2">Is the second player a computer?</param>
+    /// <param name="max_turn">Maximum number of turns</param>
+    void main_loop(bool iscomp1, bool iscomp2, int max_turn);
 
-            /// <summary>
-            /// Funkcja wypelniajaca liste wskaznikow do ruchu skokami dostepnymi w pozycji.
-            /// </summary>
-            /// <param name="moves">Lista wskaznikow do ruchu, ktora chcemy wypelnic</param>
-            /// <param name="jump_finder">Obiekt sluzacy do znalezienia skokow</param>
-            /// <param name="new_board">Obiekt typu board zawierajacy informacje o stanie na planszy</param>
-            /// <returns>Prawda, gdy zostanie znaleziony skok, falsz, gdy nie</returns>
-            bool load_jump_moves(std::list<move*>& moves, board_jumps jump_finder, const board& new_board);
+    /// <summary>
+    /// Function that fills a list of move pointers with available jump moves for a position.
+    /// </summary>
+    /// <param name="moves">List of move pointers to fill</param>
+    /// <param name="jump_finder">Object used to find jumps</param>
+    /// <param name="new_board">Board object containing the current board state</param>
+    /// <returns>True if a jump is found, false if not</returns>
+    bool load_jump_moves(std::list<move*>& moves, board_jumps jump_finder, const board& new_board);
 
-            /// <summary>
-            /// Funkcja wypelniajaca liste wskaznikow do ruchu ruchami dostepnymi w pozycji.
-            /// </summary>
-            /// <param name="moves">Lista wskaznikow do ruchu, ktora chcemy wypelnic</param>
-            /// <param name="move_finder">Obiekt sluzacy do znalezienia ruchow</param>
-            /// <param name="new_board">Obiekt typu board zawierajacy informacje o stanie na planszy</param>
-            /// <returns>Prawda, gdy zostanie znaleziony ruch, falsz, gdy nie</returns>
-            bool load_moves(std::list<move*>& moves, board_moves move_finder, const board& new_board);
+    /// <summary>
+    /// Function that fills a list of move pointers with available moves for a position.
+    /// </summary>
+    /// <param name="moves">List of move pointers to fill</param>
+    /// <param name="move_finder">Object used to find moves</param>
+    /// <param name="new_board">Board object containing the current board state</param>
+    /// <returns>True if a move is found, false if not</returns>
+    bool load_moves(std::list<move*>& moves, board_moves move_finder, const board& new_board);
 
-        public:
-            /// <summary>
-            /// Konstruktor inicjujacy nowa gre.
-            /// </summary>
-            /// <param name="is_comp_1">Czy pierwszy gracz jest komputerem</param>
-            /// <param name="level1">Poziom trudnosci pierwszego gracza. 0 oznacza gracza fizycznego</param>
-            /// <param name="is_comp_2">Czy drugi gracz jest komputerem.</param>
-            /// <param name="level2">Poziom trudnosci drugiego gracza. 0 oznacza gracza fizycznego</param>
-            game(bool is_comp_1, int level1, bool is_comp_2, int level2);
+public:
+    /// <summary>
+    /// Constructor initializing a new game.
+    /// </summary>
+    /// <param name="is_comp_1">Is the first player a computer?</param>
+    /// <param name="level1">Difficulty level of the first player. 0 means a human player</param>
+    /// <param name="is_comp_2">Is the second player a computer?</param>
+    /// <param name="level2">Difficulty level of the second player. 0 means a human player</param>
+    game(bool is_comp_1, int level1, bool is_comp_2, int level2);
 
-            /// <summary>
-            /// Funkcja rozpoczynajaca gre.
-            /// </summary>
-            void start(); 
+    /// <summary>
+    /// Function that starts the game.
+    /// </summary>
+    /// <param name="max_turn">Number of turns after which the game will end in a draw</param>
+    void start(int max_turn);
 
-            /// <summary>
-            /// Funkcja sprawdzajaca, czy gra sie zakonczyla.
-            /// </summary>
-            /// <param name="player_index">Indeks gracza</param>
-            /// <param name="list_size">Rozmiar listy ruchow</param>
-            /// <returns>Prawda, jesli gra sie zakonczyla, w przeciwnym razie falsz</returns>
-            bool game_over(int player_index, int list_size);
-        };
-
-	
-
-
+    /// <summary>
+    /// Function that checks if the game is over.
+    /// </summary>
+    /// <param name="player_index">Player index</param>
+    /// <param name="list_size">Size of the move list</param>
+    /// <returns>True if the game is over, false otherwise</returns>
+    bool game_over(int player_index, int list_size);
+};

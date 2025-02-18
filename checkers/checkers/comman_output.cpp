@@ -1,5 +1,4 @@
 #include "command.h"
-//command printing things at the start of the game
 void command_control::start_game() const {
 	std::cout << "Player named " << players[0] << " gets color ";
 	if (turn == 'w') {
@@ -15,7 +14,6 @@ void command_control::start_game() const {
 
 }
 
-//command printing things at the start of each round
 void command_control::start_round(int score, char turn,int num) const{
 	std::cout << " It is ";
 	if (turn == 'w') {
@@ -26,7 +24,6 @@ void command_control::start_round(int score, char turn,int num) const{
 	}
 	std::cout << "\nCurrent score: " << score<<" Move number "<<num;
 }
-//command informing about a made move
 void command_control::mid_round(move *m, char turn) const{
 
 	system("cls");

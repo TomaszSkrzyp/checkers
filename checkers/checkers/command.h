@@ -1,11 +1,6 @@
 #pragma once
 
-/// <param name="xs"> wpolrzedna x pola startowego </param>
-/// <param name="ys"> wpolrzedna y pola startowego </param>
-/// <param name="xj"> wpolrzedna x przeskakiwanego pola </param>
-/// <param name="yj"> wpolrzedna y przeskakiwanego pola </param>
-/// <param name="xf"> wpolrzedna x pola koncowego </param>
-/// <param name="yf"> wpolrzedna y pola koncowego </param>
+#include "board_record.h"
 #include "board_record.h"
 
 #include <vector>
@@ -13,88 +8,88 @@
 #include <chrono> 
 
 
-/// Obiekt sluzacy do obslugi wejscia i wyjscia.
+/// Object responsible for handling input and output.
 
 class command_control {
-	std::list<move*> list; /// Lista mozliwych ruchow.
-	std::string players[2]; /// "Imiona" zawodnikow bioracych udzial w grze, przechowywane w tablicy stringow.
-	char turn; /// Informacja o obecnej turze, 'w' oznacza ture bialych, 'b' oznacza ture czarnych
+	std::list<move*> list; /// List of possible moves.
+	std::string players[2]; /// "Names" of the players participating in the game, stored in an array of strings.
+	char turn; /// Information about the current turn, 'w' means white's turn, 'b' means black's turn
 
 	/// <summary>
-	/// Funkcja sprawdzajaca, czy podany ruch jest legalny. Sprawdza rowniez "skoki" o dlugosci jeden bedace czescia dluzszej sekwencji skokow.
+	/// Function that checks whether a given move is legal. It also checks "jumps" of length one that are part of longer jump sequences.
 	/// </summary>
-	/// <param name="keys"> Lista kluczy zawierajacych informacje o skoku. Funkcja aktualizuje te liste w przypadku dluzszej sekwencji skokow. </param>
-	/// <param name="xs"> Wspolrzedna X pola startowego </param>
-	/// <param name="ys"> Wspolrzedna Y pola startowego </param>
-	/// <param name="xj"> Wspolrzedna X przeskakiwanego pola </param>
-	/// <param name="yj"> Wspolrzedna Y przeskakiwanego pola </param>
-	/// <param name="xf"> Wspolrzedna X pola koncowego </param>
-	/// <param name="yf"> Wspolrzedna Y pola koncowego </param>
-	/// <param name="answer"> Wskaznik do poprawnego ruchu, przekazywany przez referencje, co pozwala "zwrocic" poprawny ruch. </param>
-	/// <param name="reset"> Informacja o koniecznosci zresetowania funkcji pobierania ruchu od uzytkownika. </param>
-	/// <returns> True lub false w zaleznosci od tego, czy znaleziono poprawny ruch. </returns>
+	/// <param name="keys"> List of keys containing information about the jump. The function updates this list in case of longer jump sequences. </param>
+	/// <param name="xs"> x-coordinate of the starting square </param>
+	/// <param name="ys"> y-coordinate of the starting square </param>
+	/// <param name="xj"> x-coordinate of the jumped square </param>
+	/// <param name="yj"> y-coordinate of the jumped square </param>
+	/// <param name="xf"> x-coordinate of the ending square </param>
+	/// <param name="yf"> y-coordinate of the ending square </param>
+	/// <param name="answer"> A pointer to the correct move, passed by reference to "return" the correct move. </param>
+	/// <param name="reset"> Information about the need to reset the move request process from the user. </param>
+	/// <returns> True or false depending on whether a valid move is found. </returns>
 	bool one_move_request(std::list<int>& keys, int& xs, int& ys, int& xj, int& yj, int& xf, int& yf, move*& answer, bool& reset);
 
 	/// <summary>
-	/// Funkcja pobierajaca pole od uzytkownika w postaci pozycji na planszy i konwertujaca do wartosci int bedacej indeksem.
+	/// Function that retrieves a square from the user in the form of a position on the board and converts it to an int value being the index.
 	/// </summary>
-	/// <param name="x"> Wspolrzedna X pola, pobierana jako referencja z uwagi na potrzebe zaktualizowania wartosci przekonwertowanej. </param>
-	/// <param name="y"> Wspolrzedna Y pola, pobierana jako referencja z uwagi na potrzebe zaktualizowania wartosci przekonwertowanej. </param>
+	/// <param name="x"> x-coordinate of the square, passed by reference in order to update the converted value. </param>
+	/// <param name="y"> y-coordinate of the square, passed by reference in order to update the converted value. </param>
 	void get_pos_from_command(int& x, int& y);
 
 	/// <summary>
-	/// Funkcja wyswietlajaca ruch w postaci zgodnej z pozycjami na planszy. 
+	/// Function that displays the move in a format consistent with board positions.
 	/// </summary>
-	/// <param name="v"> Wskaznik do ruchu, ktory chcemy wyswietlic. </param>
+	/// <param name="v"> A pointer to the move we want to display. </param>
 	void print_single_move(move* v) const;
 
 	/// <summary>
-	/// Funkcja "zmazujaca" n linii z terminalu.
+	/// Function that "erases" n lines from the terminal.
 	/// </summary>
-	/// <param name="n_lines"> Ilosc linii do "zmazania". </param>
+	/// <param name="n_lines"> The number of lines to "erase". </param>
 	void clear_lines(int n_lines) const;
 
 	/// <summary>
-	/// Funkcja ustalajaca wspolrzedna Y przeskakiwanego pola. Przez kompresje planszy nie jest to trywialne zadanie. Wspolrzedna X jest zawsze srednia arytmetyczna xs i xf.
+	/// Function that determines the y-coordinate of the jumped square. Due to board compression, this is not a trivial task. The x-coordinate is always the arithmetic mean of xs and xf.
 	/// </summary>
-	/// <param name="yj"> Wspolrzedna Y przeskakiwanego pola, pobierana przez referencje. </param>
-	/// <param name="xs"> Wspolrzedna X pola startowego </param>
-	/// <param name="ys"> Wspolrzedna Y pola startowego </param>
-	/// <param name="yf"> Wspolrzedna Y pola koncowego </param>
+	/// <param name="yj"> The y-coordinate of the jumped square, passed by reference. </param>
+	/// <param name="xs"> x-coordinate of the starting square </param>
+	/// <param name="ys"> y-coordinate of the starting square </param>
+	/// <param name="yf"> y-coordinate of the ending square </param>
 	void find_y_jumped(int& yj, int xs, int ys, int yf);
 
 	/// <summary>
-	/// Funkcja ustalajaca wartosc klucza dla skoku. Wartosc ta zawiera informacje o punkcie startowym, przeskakiwanym i koncowym.
+	/// Function that determines the key value for the jump. This value contains information about the starting point, jumped point, and ending point.
 	/// </summary>
-	/// <param name="xs"> Wspolrzedna X pola startowego </param>
-	/// <param name="ys"> Wspolrzedna Y pola startowego </param>
-	/// <param name="xj"> Wspolrzedna X przeskakiwanego pola </param>
-	/// <param name="yj"> Wspolrzedna Y przeskakiwanego pola </param>
-	/// <param name="xf"> Wspolrzedna X pola koncowego </param>
-	/// <param name="yf"> Wspolrzedna Y pola koncowego </param>
+	/// <param name="xs"> x-coordinate of the starting square </param>
+	/// <param name="ys"> y-coordinate of the starting square </param>
+	/// <param name="xj"> x-coordinate of the jumped square </param>
+	/// <param name="yj"> y-coordinate of the jumped square </param>
+	/// <param name="xf"> x-coordinate of the ending square </param>
+	/// <param name="yf"> y-coordinate of the ending square </param>
 	/// <returns></returns>
 	const int hashed_jump(int xs, int ys, int xj, int yj, int xf, int yf);
 
 	/// <summary>
-	/// Funkcja obracajaca wartosc klucza.
+	/// Function that rotates the key value.
 	/// </summary>
-	/// <param name="i"> Wartosc klucza </param>
-	/// <returns> Obrocona wartosc klucza </returns>
+	/// <param name="i"> The key value </param>
+	/// <returns> The rotated key value </returns>
 	const int rev_hash(int i);
 
 public:
 	/// <summary>
-	/// Konstruktor obiektu command_control.
+	/// Constructor for the command_control object.
 	/// </summary>
-	/// <param name="t"> Obecna tura </param>
-	/// <param name="p1"> "Imie" pierwszego zawodnika </param>
-	/// <param name="p2"> "Imie" drugiego zawodnika </param>
+	/// <param name="t"> Current turn </param>
+	/// <param name="p1"> "Name" of the first player </param>
+	/// <param name="p2"> "Name" of the second player </param>
 	command_control(char t, const std::string& p1, const std::string& p2) : turn(t) {
 		players[0] = p1; players[1] = p2;
-	} 
+	}
 
 	/// <summary>
-	/// Destruktor niszczacy obiekt command control. Nie ma potrzeby dealokowania wskaznikow znajdujacych sie w liscie, poniewaz zajmuje sie tym inna funkcja.
+	/// Destructor that destroys the command_control object. There is no need to deallocate the pointers in the list, as that is handled by another function.
 	/// </summary>
 	~command_control() {
 		while (!list.empty()) {
@@ -103,95 +98,95 @@ public:
 	}
 
 	/// <summary>
-	/// Funkcja obliczajaca wartosc wykonanego ruchu.
+	/// Function that calculates the value of a move.
 	/// </summary>
-	/// <param name="cur_score"> Wynik przed ruchem </param>
-	/// <param name="score_after"> Wynik po ruchu </param>
+	/// <param name="cur_score"> The score before the move </param>
+	/// <param name="score_after"> The score after the move </param>
 	void move_strength(int cur_score, int score_after) const;
 
 	/// <summary>
-	/// Funkcja pobierajaca od uzytkownika ruch. Dziala wspolnie z funkcja one_move_request.
+	/// Function that retrieves a move from the user. Works in conjunction with the one_move_request function.
 	/// </summary>
-	/// <returns> Zwraca poprawny ruch </returns>
+	/// <returns> The valid move </returns>
 	move* move_request();
 
 	/// <summary>
-	/// Funkcja informujaca o przydziale graczom koloru.
+	/// Function that informs about the assignment of colors to players.
 	/// </summary>
 	void start_game() const;
 
 	/// <summary>
-	/// Funkcja informujaca o obecnej kolejce oraz wyniku.
+	/// Function that informs about the current turn and score.
 	/// </summary>
-	/// <param name="score"> Obecny wynik </param>
-	/// <param name="turn"> Obecna kolej </param>
-	/// <param name="num"> Numer ruchu </param>
+	/// <param name="score"> The current score </param>
+	/// <param name="turn"> The current turn </param>
+	/// <param name="num"> The move number </param>
 	void start_round(int score, char turn, int num) const;
 
 	/// <summary>
-	/// Funkcja informujaca o wlasnie wykonanym ruchu.
+	/// Function that informs about the move just made.
 	/// </summary>
-	/// <param name="m"> Wskaznik do ruchu </param>
-	/// <param name="turn"> Obecna kolej </param>
+	/// <param name="m"> A pointer to the move </param>
+	/// <param name="turn"> The current turn </param>
 	void mid_round(move* m, char turn) const;
 
 	/// <summary>
-	/// Funkcja informujaca o koncu gry, ewentualnym zwyciezcy oraz wysylajaca zapytanie o kolejna partie.
+	/// Function that informs about the end of the game, the potential winner, and asks about the desire for another match.
 	/// </summary>
-	/// <param name="is_draw"> Informuje o ewentualnym remisie </param>
-	/// <param name="index"> Informuje o indeksie zwyciezcy </param>
-	/// <returns> Zwraca true, gdy gracz wykazuje chec zagrania kolejnej partii </returns>
+	/// <param name="is_draw"> Informs about a possible draw </param>
+	/// <param name="index"> Informs about the index of the winner </param>
+	/// <returns> Returns true if the player wishes to play another match </returns>
 	bool end_game(bool is_draw, int index) const;
 
 	/// <summary>
-	/// Funkcja wyswietlajaca ruch w postaci zgodnej z pozycjami na planszy, pomijajac ewentualne przeskoczone pola.
+	/// Function that displays the move in a format consistent with board positions, excluding any jumped squares.
 	/// </summary>
-	/// <param name="v"> Wskaznik do ruchu, ktory chcemy wyswietlic </param>
+	/// <param name="v"> A pointer to the move we want to display </param>
 	void this_move_command(move* m) const;
 
 	/// <summary>
-	/// Funkcja wyswietlajaca obecna tablice.
+	/// Function that displays the current board.
 	/// </summary>
-	/// <param name="b"> Wskaznik do obiektu klasy board zawierajacej plansze, ktora chcemy wyswietlic </param>
+	/// <param name="b"> A pointer to the board object containing the board we want to display </param>
 	void print_table(const board* b) const;
 
 	/// <summary>
-	/// Aktualizuje liste ruchow posiadanych przez obiekt command control oraz zmienia ture.
+	/// Updates the list of moves held by the command_control object and changes the turn.
 	/// </summary>
-	/// <param name="new_list"> Referencja do listy wskaznikow do ruchow, ktora chcemy wgrac do obiektu command control </param>
-	/// <param name="t"> Obecna tura </param>
+	/// <param name="new_list"> A reference to the list of move pointers we want to load into the command_control object </param>
+	/// <param name="t"> The current turn </param>
 	void replace_moves(const std::list<move*>& new_list, char t);
 
 	/// <summary>
-	/// Wyswietla liste dostepnych ruchow.
+	/// Displays the list of available moves.
 	/// </summary>
 	void print_move() const;
 
 	/// <summary>
-	/// Funkcja zmieniajaca atrybut obecnej tury.
+	/// Function that changes the value of the current turn.
 	/// </summary>
-	/// <param name="t"> Nowa wartosc tury </param>
+	/// <param name="t"> The new value of the turn </param>
 	void replace_turn(char t) {
 		turn = t;
 	}
 
 	/// <summary>
-	/// Funkcja zwracajaca wartosc tury.
+	/// Function that returns the value of the turn.
 	/// </summary>
-	/// <returns> Wartosc tury </returns>
+	/// <returns> The value of the turn </returns>
 	char get_turn() const {
 		return turn;
 	}
 
 	/// <summary>
-	/// Funkcja pobierajaca dane wejsciowe i konwertujaca je do typu string.
+	/// Function that retrieves input data and converts it to a string type.
 	/// </summary>
-	/// <returns> Dane wejsciowe w formie stringa </returns>
+	/// <returns> The input data in the form of a string </returns>
 	std::string get_string() const;
 
 	/// <summary>
-	/// Funkcja drukujaca wartosci wszystkich poprzednich gier.
+	/// Function that prints the results of all previous games.
 	/// </summary>
 	void print_previous_results(game_results_container<std::string>& winners, game_results_container<int>& game_lengths) const;
-	
+
 };

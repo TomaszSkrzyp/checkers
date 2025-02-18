@@ -4,7 +4,6 @@
 bool board_jumps::create_jump(std::list<jump*> j_list, char piece, int xs, int ys,int xj,int yj, int xf, int yf, jump* prev) {
 	
 	int key = hashed_jump(xs,ys, xj,yj, xf, yf);
-	/*obiekttypu skok sluzacy do sprawdzenia czy w liscie nie wystapil juz ten skok lub skok odwrotny */
 	jump* check = prev;
 
 	while (check != nullptr) {
@@ -19,7 +18,6 @@ bool board_jumps::create_jump(std::list<jump*> j_list, char piece, int xs, int y
 
 
 	jump* j = new jump(piece, arr[xj][yj], xj, yj, xs, ys, xf, yf, prev, key);
-	/*std::cout << "  new jump created  " << "\n" << j << "\n";*/
 	if (prev != nullptr) {
 		prev->set_next(true);
 	}
@@ -28,7 +26,6 @@ bool board_jumps::create_jump(std::list<jump*> j_list, char piece, int xs, int y
 	return true;
 
 }
-/*converts a list of jumps innto a move and adds it to board's m_list*/
 void board_jumps::create_jump_move(std::list<jump*> j_list) {
 	if (j_list.size() != 0) {
 		std::list<jump*>::const_iterator it= j_list.begin();
@@ -64,7 +61,6 @@ void board_jumps::avalilable_jump(int xs,int ys,jump* prev,std::list<jump*>& j_l
 
 					check_jump(turn, xs, ys, 'l', 'u', prev, j_list);
 				}
-				/*u-bicie w gore,d-bicie w dol*/
 				if (tolower(turn) == 'b' or turn == 'W') {
 					check_jump(turn, xs, ys, 'l', 'd', prev, j_list);
 				}
@@ -87,7 +83,6 @@ void board_jumps::check_jump(char jumping_piece, int xs, int ys, char direction_
 	int x_finish; int y_finish;
 	char required_jumped_piece;
 	char jumped_piece;
-	/*ustalanie wspolrzednej pionowej polozenia poinka w ruchu*/
 	if (direction_x == 'u') {
 		if (xs < 2) {
 			if (j_list.size() != 0) {
@@ -113,7 +108,6 @@ void board_jumps::check_jump(char jumping_piece, int xs, int ys, char direction_
 		}
 		x_finish = xs + 2; x_jumped = xs + 1;	
 	}
-	/*ustalanie wspolrzednej poziomej polozenia poinka w ruchu*/
 	if (direction_y == 'l') {
 		y_finish = ys - 1;
 	}
@@ -121,7 +115,6 @@ void board_jumps::check_jump(char jumping_piece, int xs, int ys, char direction_
 		y_finish = ys + 1;
 	}
 	find_y_jumped(y_jumped, xs, ys, y_finish);
-	/*ustalanie przeskakiwanego piona i wymaganego przeskakiwanego piona*/
 	jumped_piece = arr[x_jumped][y_jumped];
 	if (tolower(jumping_piece) == 'b') {
 		required_jumped_piece = 'w';
@@ -130,7 +123,6 @@ void board_jumps::check_jump(char jumping_piece, int xs, int ys, char direction_
 		required_jumped_piece = 'b';
 	}
 	
-	/*wlasciwa czesc funkcji*/
 	if (arr[x_finish][y_finish] == 'e' and tolower(jumped_piece) == required_jumped_piece) {
 		
 		create_jump(j_list, turn, xs, ys, x_jumped, y_jumped, x_finish, y_finish, prev);

@@ -1,12 +1,10 @@
 #include"command.h"
-//reading a strig of  input
 std::string command_control::get_string() const{
 	std::string str;
 	std::cin >> str;
 	return str;
 
 }
-//updating moves contained by command control
 void command_control::replace_moves(const std::list<move*>& new_list, char t) {
 	turn = t;
 	while (!list.empty()) {
@@ -18,7 +16,6 @@ void command_control::replace_moves(const std::list<move*>& new_list, char t) {
 	}
 
 }
-//getting a move from user and checking if its legal
 bool command_control::one_move_request(std::list<int>& keys, int& xs, int& ys, int& xj, int& yj, int& xf, int& yf,move*& answer,bool& reset) {
 	std::cout << "Now type in finishing square\n";
 	get_pos_from_command(xf, yf);
@@ -45,7 +42,6 @@ bool command_control::one_move_request(std::list<int>& keys, int& xs, int& ys, i
 	return false;
 }
 
-// main function used to read user input and convert it to move, then returnig it
 move* command_control::move_request() {
 	std::list<int> keys;
 	std::cout << "Type in starting square\n";
@@ -61,13 +57,12 @@ move* command_control::move_request() {
 
 	}
 	while (one_move_request(keys, xs, ys, xj, yj, xf, yf, answer, reset) != true) {
-		// sprawdza czy skok nie jest za dlugi
+	
 		if (n_jumps == max_jumps and reset!=true) {
 			std::cout << "Too long of a jump for this postion";
 			reset = true;
 
 		}
-		//reset algorytmu pobierania ruchu
 		if (reset) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 			clear_lines(4 );
@@ -121,7 +116,6 @@ move* command_control::move_request() {
 
 	return move_request();
 }
-//getting data from input and convering it itno a move
 void command_control::get_pos_from_command(int& x, int& y) {
 
 	char x_buf; char y_buf;
@@ -156,7 +150,6 @@ void command_control::get_pos_from_command(int& x, int& y) {
 	}
 	
 }
-//function transalting coordinates from 8x8  table to 8x4 table
 void command_control::find_y_jumped(int& y_jumped, int xs, int ys, int yf) {
 	if (yf < ys) {
 		if (xs % 2 == 0) {
@@ -176,7 +169,6 @@ void command_control::find_y_jumped(int& y_jumped, int xs, int ys, int yf) {
 
 	}
 }
-/*hashing jumps*/
 const int command_control::hashed_jump(int xs, int ys, int xj, int yj, int xf, int yf) {
 	return (xf + 1) * 10 + (yf + 1) * 1 + (xj + 1) * 1000 + (yj + 1) * 100 + (xs + 1) * 100000 + (ys + 1) * 10000;
 }

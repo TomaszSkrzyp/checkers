@@ -23,7 +23,7 @@ move* smart_computer::choose_move( std::list<move*> moves, command_control& cons
 
 }
 move* human_player::choose_move( std::list<move*> moves, command_control& console) {
-   /*pozniej wyrzucic*/
+
 
     console.print_move();
     return console.move_request();

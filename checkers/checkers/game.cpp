@@ -90,6 +90,7 @@ game::game(bool is_comp_1, int level1, bool is_comp_2, int level2) {
 		
 	}
 	else {
+		level[0] = 0;
 		player1.set_type(std::make_shared<human_player>());
 	}
 	if (is_comp_2) {
@@ -97,10 +98,13 @@ game::game(bool is_comp_1, int level1, bool is_comp_2, int level2) {
 			player2.set_type(std::make_shared<smart_computer>());
 		}
 		else {
+
 			player2.set_type(std::make_shared<random_comp>());
 		}
 	}
 	else {
+
+		level[0] = 0;
 		player2.set_type(std::make_shared<human_player>());
 	}
 	types[0] = is_comp_1; types[1] = is_comp_2;
@@ -115,7 +119,6 @@ bool game::load_moves(std::list<move*> &moves, board_moves move_finder,const boa
 	move_finder.avalilable_moves();
 	move_finder.update_moves(moves);
 	if (!moves.empty()) {
-		/*do wyrzycenia*/
 		
 		return true;
 	}
@@ -167,6 +170,6 @@ int game::evaluate_score(const board& b) {
 	return white_score + black_score;
 }
 
-void game::start() {
-	main_loop(types[0], types[1], 50);
+void game::start(int max_turn) {
+	main_loop(types[0], types[1], max_turn);
 }

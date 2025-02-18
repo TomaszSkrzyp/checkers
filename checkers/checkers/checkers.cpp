@@ -6,8 +6,8 @@
 #include "game.h"
 #include <iostream>
 int main() {
-	 game this_game(false,0,true,5);
-	 this_game.start();
+	 game this_game(false,0,true,1);
+	 this_game.start(50);
 
 	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
 	_CrtDumpMemoryLeaks();

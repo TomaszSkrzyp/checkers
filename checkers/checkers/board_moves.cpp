@@ -66,7 +66,6 @@ bool board_moves::avalilable_moves() {
 		for (int j = 0; j < 4; j++) {
 			if (turn == 'w') {
 
-				/*char l do poruszania w lewo i r do poruszania w prawo*/
 				if (tolower(arr[i][j]) == 'w' and i != 0) {
 					move_legal_up(arr[i][j], i, j, 'l');
 					move_legal_up(arr[i][j], i, j, 'r');

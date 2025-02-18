@@ -29,7 +29,6 @@ void board::reset() {
 }
 board::board(char w_is_computer,char b_is_computer) {
 	is_computer[0] = w_is_computer;is_computer[1] = b_is_computer;
-	/*std::cout << "board created" << std::endl;*/
 	reset();
 }
 board::board(const board& board) :turn(board.turn) {
@@ -65,7 +64,6 @@ void board::make_move(move* chosen_move) {
 	change_turn();
 	move* prev_move = new move(*chosen_move);
 
-	/*std::cout << "  new prev_move created  " << "\n" << prev_move << "\n";*/
 	previous_moves.push_back(prev_move);
 	check_crown(finish[0], finish[1]);
 	

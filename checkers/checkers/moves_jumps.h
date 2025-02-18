@@ -3,151 +3,148 @@
 #include <iostream>
 
 /// <summary>
-/// Klasa reprezentujaca pojedynczy skok pionka na planszy.
+/// Class representing a single jump of a piece on the board.
 /// </summary>
 class jump {
-	char j_piece; ///< Kolor pionka wykonujacego skok
-	jump* prev; ///< Wskaznik do poprzedniego skoku
-	bool next; ///< Flaga okreslajaca, czy istnieje kolejny skok
-	int key = 0; ///< Klucz identyfikacyjny skoku
-	/*przeskoczone piony*/
-	char jumped; ///< Kolor pionka, ktory zostal przeskoczony
-	int xj; ///< Wspolrzedna x przeskoczonego pionka
-	int yj; ///< Wspolrzedna y przeskoczonego pionka
-	/*start i finish*/
-	int xs; ///< Wspolrzedna x pola startowego skoku
-	int ys; ///< Wspolrzedna y pola startowego skoku
+	char j_piece; ///< Color of the piece making the jump
+	jump* prev; ///< Pointer to the previous jump
+	bool next; ///< Flag indicating whether there is another jump
+	int key = 0; ///< Unique identifier for the jump
+	/*jumped pieces*/
+	char jumped; ///< Color of the piece that was jumped over
+	int xj; ///< x-coordinate of the jumped piece
+	int yj; ///< y-coordinate of the jumped piece
+	/*start and finish*/
+	int xs; ///< x-coordinate of the starting field of the jump
+	int ys; ///< y-coordinate of the starting field of the jump
 
-	int xf; ///< Wspolrzedna x pola docelowego skoku
-	int yf; ///< Wspolrzedna y pola docelowego skoku
+	int xf; ///< x-coordinate of the destination field of the jump
+	int yf; ///< y-coordinate of the destination field of the jump
 
 public:
-	int n_jump; ///< Licznik referencji do obiektu skoku
+	int n_jump; ///< Counter for references to the jump object
 
 	/// <summary>
-	/// Konstruktor tworzacy obiekt skoku.
+	/// Constructor creating a jump object.
 	/// </summary>
-	/// <param name="j_p">Kolor pionka wykonujacego skok</param>
-	/// <param name="j">Kolor pionka, ktory zostal przeskoczony</param>
-	/// <param name="x_j">Wspolrzedna x przeskoczonego pionka</param>
-	/// <param name="y_j">Wspolrzedna y przeskoczonego pionka</param>
-	/// <param name="x_s">Wspolrzedna x pola startowego skoku</param>
-	/// <param name="y_s">Wspolrzedna y pola startowego skoku</param>
-	/// <param name="x_f">Wspolrzedna x pola docelowego skoku</param>
-	/// <param name="y_f">Wspolrzedna y pola docelowego skoku</param>
-	/// <param name="p">Wskaznik do poprzedniego skoku</param>
-	/// <param name="k">Klucz identyfikacyjny skoku</param>
+	/// <param name="j_p">Color of the piece making the jump</param>
+	/// <param name="j">Color of the piece that was jumped over</param>
+	/// <param name="x_j">x-coordinate of the jumped piece</param>
+	/// <param name="y_j">y-coordinate of the jumped piece</param>
+	/// <param name="x_s">x-coordinate of the starting field of the jump</param>
+	/// <param name="y_s">y-coordinate of the starting field of the jump</param>
+	/// <param name="x_f">x-coordinate of the destination field of the jump</param>
+	/// <param name="y_f">y-coordinate of the destination field of the jump</param>
+	/// <param name="p">Pointer to the previous jump</param>
+	/// <param name="k">Unique identifier for the jump</param>
 	jump(char j_p, char j, int x_j, int y_j, int x_s, int y_s, int x_f, int y_f, jump* p, int k)
-		: prev(p), j_piece(j_p), jumped(j), xj(x_j), yj(y_j), n_jump(0), next(false), xs(x_s), ys(y_s), xf(x_f), yf(y_f), key(k) {
+		: prev(p), j_piece(j_p), jumped(j), xj(x_j), yj(y_j), n_jump(0), next(false), xs(x_s), ys(y_s), xf(x_f), yf(yf), key(k) {
 	}
 
 	/// <summary>
-	/// Metoda zwracajaca klucz identyfikacyjny skoku.
+	/// Method returning the unique identifier of the jump.
 	/// </summary>
-	/// <returns>Klucz identyfikacyjny skoku</returns>
+	/// <returns>Unique identifier of the jump</returns>
 	int get_key() const { return key; }
 
 	/// <summary>
-	/// Metoda zwracajaca wskaznik do poprzedniego skoku.
+	/// Method returning the pointer to the previous jump.
 	/// </summary>
-	/// <returns>Wskaznik do poprzedniego skoku</returns>
+	/// <returns>Pointer to the previous jump</returns>
 	jump* get_prev() { return prev; }
 
 	/// <summary>
-	/// Metoda ustawiajaca flage okreslajaca, czy istnieje kolejny skok.
+	/// Method setting the flag indicating whether there is another jump.
 	/// </summary>
-	/// <param name="new_next">Nowa wartosc flagi next</param>
+	/// <param name="new_next">New value for the next flag</param>
 	void set_next(bool new_next) { next = new_next; }
 
 	/// <summary>
-	/// Metoda zwracajaca wartosc flagi next, okreslajacej, czy istnieje kolejny skok.
+	/// Method returning the value of the next flag, indicating whether there is another jump.
 	/// </summary>
-	/// <returns>Wartosc flagi next</returns>
+	/// <returns>Value of the next flag</returns>
 	bool get_next() const { return next; }
 
 	/// <summary>
-	/// Metoda zwracajaca kolor pionka wykonujacego skok.
+	/// Method returning the color of the piece making the jump.
 	/// </summary>
-	/// <returns>Kolor pionka wykonujacego skok</returns>
+	/// <returns>Color of the piece making the jump</returns>
 	char get_piece() const { return j_piece; }
 
 	/// <summary>
-	/// Metoda zwracajaca kolor pionka, ktory zostal przeskoczony.
+	/// Method returning the color of the piece that was jumped over.
 	/// </summary>
-	/// <returns>Kolor pionka, ktory zostal przeskoczony</returns>
+	/// <returns>Color of the piece that was jumped over</returns>
 	char get_jumped_piece() const { return jumped; }
 
 	/// <summary>
-	/// Metoda zwracajaca wspolrzedna x pola startowego skoku.
+	/// Method returning the x-coordinate of the starting field of the jump.
 	/// </summary>
-	/// <returns>Wspolrzedna x pola startowego skoku</returns>
+	/// <returns>x-coordinate of the starting field of the jump</returns>
 	int get_xs() const { return xs; }
 
 	/// <summary>
-	/// Metoda zwracajaca wspolrzedna y pola startowego skoku.
+	/// Method returning the y-coordinate of the starting field of the jump.
 	/// </summary>
-	/// <returns>Wspolrzedna y pola startowego skoku</returns>
+	/// <returns>y-coordinate of the starting field of the jump</returns>
 	int get_ys() const { return ys; }
 
 	/// <summary>
-	/// Metoda zwracajaca wspolrzedna x pola docelowego skoku.
+	/// Method returning the x-coordinate of the destination field of the jump.
 	/// </summary>
-	/// <returns>Wspolrzedna x pola docelowego skoku</returns>
+	/// <returns>x-coordinate of the destination field of the jump</returns>
 	int get_xf() const { return xf; }
 
 	/// <summary>
-	/// Metoda zwracajaca wspolrzedna y pola docelowego skoku.
+	/// Method returning the y-coordinate of the destination field of the jump.
 	/// </summary>
-	/// <returns>Wspolrzedna y pola docelowego skoku</returns>
+	/// <returns>y-coordinate of the destination field of the jump</returns>
 	int get_yf() const { return yf; }
 
 	/// <summary>
-	/// Metoda zwracajaca wspolrzedna x przeskoczonego pionka.
+	/// Method returning the x-coordinate of the jumped piece.
 	/// </summary>
-	/// <returns>Wspolrzedna x przeskoczonego pionka</returns>
+	/// <returns>x-coordinate of the jumped piece</returns>
 	int get_xj() const { return xj; }
 
 	/// <summary>
-	/// Metoda zwracajaca wspolrzedna y przeskoczonego pionka.
+	/// Method returning the y-coordinate of the jumped piece.
 	/// </summary>
-	/// <returns>Wspolrzedna y przeskoczonego pionka</returns>
+	/// <returns>y-coordinate of the jumped piece</returns>
 	int get_yj() const { return yj; }
 };
-#pragma once
-#include <list>
-#include <iostream>
 
 /// <summary>
-/// Klasa reprezentujaca pojedynczy ruch pionka na planszy.
+/// Class representing a single move of a piece on the board.
 /// </summary>
 class move {
-	char piece; ///< Kolor pionka wykonujacego ruch
+	char piece; ///< Color of the piece making the move
 	/*start*/
-	int xs; ///< Wspolrzedna x pola startowego ruchu
-	int ys; ///< Wspolrzedna y pola startowego ruchu
-	/*finisz*/
-	int xf; ///< Wspolrzedna x pola docelowego ruchu
-	int yf; ///< Wspolrzedna y pola docelowego ruchu
+	int xs; ///< x-coordinate of the starting field of the move
+	int ys; ///< y-coordinate of the starting field of the move
+	/*finish*/
+	int xf; ///< x-coordinate of the destination field of the move
+	int yf; ///< y-coordinate of the destination field of the move
 
 public:
 	/// <summary>
-	/// Konstruktor inicjujacy nowy ruch.
+	/// Constructor initializing a new move.
 	/// </summary>
-	/// <param name="p">Kolor pionka wykonujacego ruch</param>
-	/// <param name="x_s">Wspolrzedna x pola startowego ruchu</param>
-	/// <param name="y_s">Wspolrzedna y pola startowego ruchu</param>
-	/// <param name="x_f">Wspolrzedna x pola docelowego ruchu</param>
-	/// <param name="y_f">Wspolrzedna y pola docelowego ruchu</param>
+	/// <param name="p">Color of the piece making the move</param>
+	/// <param name="x_s">x-coordinate of the starting field of the move</param>
+	/// <param name="y_s">y-coordinate of the starting field of the move</param>
+	/// <param name="x_f">x-coordinate of the destination field of the move</param>
+	/// <param name="y_f">y-coordinate of the destination field of the move</param>
 	move(char p, int x_s, int y_s, int x_f, int y_f)
 		: piece(p), xs(x_s), ys(y_s), xf(x_f), yf(y_f) {
 	}
 
-	std::list<jump*> jumps; ///< Lista skokow wykonanych w ramach ruchu
+	std::list<jump*> jumps; ///< List of jumps made as part of the move
 
 	/// <summary>
-	/// Konstruktor kopiujacy, tworzacy nowy ruch na podstawie istniejacego.
+	/// Copy constructor, creating a new move based on an existing one.
 	/// </summary>
-	/// <param name="copied">Referencja do kopii ruchu, ktora nalezy skopiowac</param>
+	/// <param name="copied">Reference to the move to be copied</param>
 	move(move& copied)
 		: piece(copied.get_piece()), xs(copied.get_xs()), ys(copied.get_ys()), xf(copied.get_xf()), yf(copied.get_yf()) {
 		for (std::list<jump*>::iterator it = copied.jumps.begin(); it != copied.jumps.end(); ++it) {
@@ -157,7 +154,7 @@ public:
 	}
 
 	/// <summary>
-	/// Destruktor usuwajacy wszystkie skoki z listy skokow.
+	/// Destructor removing all jumps from the list of jumps.
 	/// </summary>
 	~move() {
 		for (std::list<jump*>::iterator it = jumps.begin(); it != jumps.end(); ++it) {
@@ -169,70 +166,70 @@ public:
 	}
 
 	/// <summary>
-	/// Metoda sprawdzajaca, czy w wyniku ruchu nastepuje "ukoronowanie" piona.
+	/// Method checking whether a "kinging" has occurred as a result of the move.
 	/// </summary>
-	/// <param name="piece_after">Kolor pionka po wykonaniu ruchu</param>
-	/// <returns>true, jesli nastepuje "ukoronowanie"; false w przeciwnym razie</returns>
+	/// <param name="piece_after">Color of the piece after the move</param>
+	/// <returns>true if "kinging" occurred; false otherwise</returns>
 	bool has_kinging_occured(char piece_after);
 
 	/*getters*/
 
 	/// <summary>
-	/// Metoda zwracajaca wspolrzedna x pola startowego ruchu.
+	/// Method returning the x-coordinate of the starting field of the move.
 	/// </summary>
-	/// <returns>Wspolrzedna x pola startowego ruchu</returns>
+	/// <returns>x-coordinate of the starting field of the move</returns>
 	int get_xs() const { return xs; }
 
 	/// <summary>
-	/// Metoda zwracajaca wspolrzedna y pola startowego ruchu.
+	/// Method returning the y-coordinate of the starting field of the move.
 	/// </summary>
-	/// <returns>Wspolrzedna y pola startowego ruchu</returns>
+	/// <returns>y-coordinate of the starting field of the move</returns>
 	int get_ys() const { return ys; }
 
 	/// <summary>
-	/// Metoda zwracajaca wspolrzedna x pola docelowego ruchu.
+	/// Method returning the x-coordinate of the destination field of the move.
 	/// </summary>
-	/// <returns>Wspolrzedna x pola docelowego ruchu</returns>
+	/// <returns>x-coordinate of the destination field of the move</returns>
 	int get_xf() const { return xf; }
 
 	/// <summary>
-	/// Metoda zwracajaca wspolrzedna y pola docelowego ruchu.
+	/// Method returning the y-coordinate of the destination field of the move.
 	/// </summary>
-	/// <returns>Wspolrzedna y pola docelowego ruchu</returns>
+	/// <returns>y-coordinate of the destination field of the move</returns>
 	int get_yf() const { return yf; }
 
 	/// <summary>
-	/// Metoda zwracajaca kolor pionka wykonujacego ruch.
+	/// Method returning the color of the piece making the move.
 	/// </summary>
-	/// <returns>Kolor pionka wykonujacego ruch</returns>
+	/// <returns>Color of the piece making the move</returns>
 	char get_piece() const { return piece; }
 
 	/// <summary>
-	/// Metoda ustawiajaca wspolrzedne pola startowego ruchu.
+	/// Method setting the coordinates of the starting field of the move.
 	/// </summary>
-	/// <param name="x">Nowa Wspolrzedna x pola startowego ruchu</param>
-	/// <param name="y">Nowa Wspolrzedna y pola startowego ruchu</param>
+	/// <param name="x">New x-coordinate of the starting field of the move</param>
+	/// <param name="y">New y-coordinate of the starting field of the move</param>
 	void set_start(int x, int y) {
 		xs = x;
 		ys = y;
 	}
 
 	/// <summary>
-	/// Metoda ustawiajaca wspolrzedne pola docelowego ruchu.
+	/// Method setting the coordinates of the destination field of the move.
 	/// </summary>
-	/// <param name="x">Nowa Wspolrzedna x pola docelowego ruchu</param>
-	/// <param name="y">Nowa Wspolrzedna y pola docelowego ruchu</param>
+	/// <param name="x">New x-coordinate of the destination field of the move</param>
+	/// <param name="y">New y-coordinate of the destination field of the move</param>
 	void set_finish(int x, int y) {
 		xf = x;
 		yf = y;
 	}
 
 	/// <summary>
-	/// Metoda wyswietlajaca informacje o wykonanych skokach.
+	/// Method displaying information about the performed jumps.
 	/// </summary>
 	const void print_jumps();
 	/// <summary>
-	/// Przeciazenie operatora dodawania pozwalajace dodac skok do listy skokow danego ruchu.
+	/// Operator overload for adding a jump to the list of jumps for the move.
 	/// </summary>
 	const move& operator+(jump* other);
 };
