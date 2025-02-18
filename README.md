@@ -24,6 +24,7 @@ A C++ compiler (e.g., g++, clang, or MSVC)
 A terminal or command prompt
 
 **Compilation and running**
+
  IF NOT USING VISUAL STUDIO:
 To compile the game, use the following command in the terminal:
 
