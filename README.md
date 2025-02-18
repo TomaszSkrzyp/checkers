@@ -57,9 +57,12 @@ EXAMPLE:
   game(false,0,true,5);
 ```  
 This would make a game between a real player number 1 - white (false means not a computer) 
-and a computer player number 2 - black (true means a computer). The number that goes after boolean means eventual depth of a computer player
+and a computer player number 2 - black (true means a computer). The number that goes after boolean means eventual depth of a computer player.
 In other words, how much turns(white and black) would the computer count ahead to choose wheter a checked move is good or bad. 
+The number for human player does not change anything, it will be set to 0 anyway.
 Computer depth 0 is a player that makes random legal moves.
+
+For better performance, level values lower than 10 are suggested.
 
 **How to Play**
 
