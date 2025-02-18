@@ -23,23 +23,38 @@ A C++ compiler (e.g., g++, clang, or MSVC)
 
 A terminal or command prompt
 
-**Compilation**
-
+**Compilation and running**
+ IF NOT USING VISUAL STUDIO:
 To compile the game, use the following command in the terminal:
 
  g++ -o checkers main.cpp checkers.cpp ai.cpp -std=c++11
-
-**Running the Game**
-
 After compiling, run the executable with:
 
-./checkers
+ ./checkers
+
+ IF USING VISUAL STUDIO:
+Open the .sln File
+Double-click on the Checkers.sln file.
+Set the Entry Point
+Make sure main.cpp is set as the Startup File (Right-click → Set as Startup Item).
+Click on the "Build Solution" (Shortcut: Ctrl + Shift + B).
+
+**Game Setup**
+
+To choose which player is a computer and eventual level of computer, change values in game object constuctor in checkers.cpp inside main()
+EXAMPLE:
+
+  game(false,0,true,5);
+  
+This would make a game between a real player number 1 - white (false means not a computer) 
+and a computer player number 2 - black (true means a computer). The number that goes after boolean means eventual depth of a computer player
+In other words, how much turns(white and black) would the computer count ahead to choose wheter a checked move is good or bad. 
+Computer depth 0 is a player that makes random legal moves.
 
 **How to Play**
 
 The game follows standard Checkers rules.
-
-Players take turns moving pieces. Example fromat of a move you have to type in: "A6B5" 
+Players take turns moving pieces. Example format of a squaee you have to type in: "A6"  
 When typing longer moves you will be instructed to type in moves that will be "walked" through
 
 Regular pieces move diagonally forward; kings move diagonally in both directions.
