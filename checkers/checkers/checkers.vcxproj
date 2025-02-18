@@ -146,7 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="alpha_beta.h" />
-    <ClInclude Include="board.h" />
+    <ClInclude Include="board_record.h" />
     <ClInclude Include="board_moves.h" />
     <ClInclude Include="general.h" />
     <ClInclude Include="board_jumps.h" />

@@ -28,7 +28,7 @@ bool board_jumps::create_jump(std::list<jump*> j_list, char piece, int xs, int y
 	return true;
 
 }
-/*converts a list of jumps innto a move and ads it to board's m_list*/
+/*converts a list of jumps innto a move and adds it to board's m_list*/
 void board_jumps::create_jump_move(std::list<jump*> j_list) {
 	if (j_list.size() != 0) {
 		std::list<jump*>::const_iterator it= j_list.begin();
@@ -92,7 +92,7 @@ void board_jumps::check_jump(char jumping_piece, int xs, int ys, char direction_
 		if (xs < 2) {
 			if (j_list.size() != 0) {
 				if (m_list.size() == 0 or m_list.front()->jumps.back()->get_key() != j_list.front()->get_key()) {
-					/*std::cout << j_list.size() << " creating: " << prev->get_xs() << " " << prev->get_ys() << " " << prev->get_xf() << " " << prev->get_yf() << " " << " " << jumping_piece << std::endl;*/
+					
 					create_jump_move(j_list);
 				}
 			}
@@ -105,7 +105,7 @@ void board_jumps::check_jump(char jumping_piece, int xs, int ys, char direction_
 		if (xs > 5) {
 			if (j_list.size() != 0) {
 				if (m_list.size() == 0 or m_list.front()->jumps.back()->get_key() != j_list.front()->get_key()) {
-					/**std::cout << j_list.size() << " creating: " << prev->get_xs() << " " << prev->get_ys() << " " << prev->get_xf() << " " << prev->get_yf() << " " << " " << jumping_piece << std::endl;*/
+					
 					create_jump_move(j_list);
 				}
 			}
@@ -133,21 +133,14 @@ void board_jumps::check_jump(char jumping_piece, int xs, int ys, char direction_
 	/*wlasciwa czesc funkcji*/
 	if (arr[x_finish][y_finish] == 'e' and tolower(jumped_piece) == required_jumped_piece) {
 		
-		
-		if (!create_jump(j_list, turn, xs, ys, x_jumped, y_jumped, x_finish, y_finish, prev)) {
-			
-			/*std::cout << "not adding move " << xs << " " << ys << " " << x_jumped << " " << y_jumped << " " << x_finish << " " << y_finish << " " << jumped_piece << " " << jumping_piece << " " << direction_x << direction_y << std::endl; */
-			return;
-
-		}
-		/*std::cout << "adding move " << xs << " " << ys << " " << x_jumped << " " << y_jumped << " " << x_finish << " " << y_finish << " " << jumped_piece << " " << jumping_piece << " " << direction_x << direction_y << std::endl; */
+		create_jump(j_list, turn, xs, ys, x_jumped, y_jumped, x_finish, y_finish, prev);
 		
 		
 	}
 	else {
 		if (j_list.size()!=0){
 			if (m_list.size() == 0 or m_list.front()->jumps.back()->get_key() != j_list.front()->get_key()) {
-				/*std::cout << j_list.size() << " creating: " << prev->get_xs() << " " << prev->get_ys() << " " << prev->get_xf() << " " << prev->get_yf() << " " << jumped_piece << " " << jumping_piece << std::endl; */
+			
 				create_jump_move(j_list);
 			}
 		}
@@ -157,6 +150,8 @@ void board_jumps::check_jump(char jumping_piece, int xs, int ys, char direction_
 
 bool board_jumps::avalilable_jumps() {
 	while (!m_list.empty()) {
+
+	
 		m_list.pop_front();
 	}
 
@@ -176,6 +171,7 @@ bool board_jumps::avalilable_jumps() {
 }
 void board_jumps::update_moves(std::list<move*>& list)  {
 	while (!list.empty()) {
+		delete list.front();
 		list.pop_front();
 	}
 	for (auto v : m_list) {

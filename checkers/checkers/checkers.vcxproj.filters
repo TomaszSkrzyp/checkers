@@ -95,7 +95,7 @@
     <ClInclude Include="general.h">
       <Filter>Pliki nagłówkowe\move finder headers</Filter>
     </ClInclude>
-    <ClInclude Include="board.h">
+    <ClInclude Include="board_record.h">
       <Filter>Pliki nagłówkowe\source classes</Filter>
     </ClInclude>
     <ClInclude Include="command.h">

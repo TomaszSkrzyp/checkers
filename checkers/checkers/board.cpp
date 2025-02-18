@@ -1,5 +1,6 @@
-#include"board.h"
+#include"board_record.h"
 void board::reset() {
+	
 	turn = 'w';
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 4; j++) {
@@ -21,6 +22,8 @@ void board::reset() {
 
 		}
 	}
+	
+
 
 
 }
@@ -46,7 +49,6 @@ board::~board() {
 		previous_moves.pop_front();
 		
 	}
-	/*std::cout << "board destroyed" << std::endl;*/
 }
 char board::get_piece(int x, int y) const {
 	return arr[x][y];

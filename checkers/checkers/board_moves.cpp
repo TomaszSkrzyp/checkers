@@ -101,6 +101,7 @@ bool board_moves::avalilable_moves() {
 }
 void board_moves::update_moves(std::list<move*>& list)  {
 	while (!list.empty()) {
+
 		list.pop_front();
 	}
 	for (auto v : m_list) {

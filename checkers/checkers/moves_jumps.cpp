@@ -14,6 +14,10 @@ const void move::print_jumps() {
 	return true;
 }
 
+ const move& move::operator+(jump* other) {
+	 jumps.push_back(other);
+	 return *this;
+ }
 
 
 

@@ -3,20 +3,20 @@
 void command_control::start_game() const {
 	std::cout << "Player named " << players[0] << " gets color ";
 	if (turn == 'w') {
-		std::cout << "white.\nPlayer named " << players[1] << " gets color black.\n";
+		std::cout << "white.\n Player named " << players[1] << " gets color black.\n";
 	}
 	else if (turn == 'b') {
 		std::cout << "black.\nPlayer named " << players[1]<< " gets color white.\n";
 
 	}
 
-	std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+	std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	system("cls");
 
 }
 
 //command printing things at the start of each round
-void command_control::start_round(int score, char turn) const{
+void command_control::start_round(int score, char turn,int num) const{
 	std::cout << " It is ";
 	if (turn == 'w') {
 		std::cout <<players[0]<<"'s turn. Color: white";
@@ -24,7 +24,7 @@ void command_control::start_round(int score, char turn) const{
 	else {
 		std::cout << players[1]<<"'s turn. Color: black";
 	}
-	std::cout << "\nCurrent score: " << score;
+	std::cout << "\nCurrent score: " << score<<" Move number "<<num;
 }
 //command informing about a made move
 void command_control::mid_round(move *m, char turn) const{
@@ -40,6 +40,26 @@ void command_control::mid_round(move *m, char turn) const{
 	print_single_move(m);
 
 }
+//command informing about game finish
+bool command_control::end_game(bool is_draw, int index) const {
+	if (is_draw) {
+		std::cout << "\nIt is a draw!";
+	}
+	else {
+		std::cout << "\nPlayer " << players[index] << " has won!!";
+	}
+	std::cout << " Do you want to play once again?\n Press \"y\" if so. Otherwise press anything but \"y\" ";
+	char l;
+	std::cin >> l;
+	if (l == 'y') {
+		return true;
+	}
+	else {
+		return false;
+	}
+	system("cls");
+}
+
 //command informing about how this move changed score
 void command_control::move_strength(int cur_score, int score_after) const {
 	if (turn == 'w') {
@@ -50,7 +70,7 @@ void command_control::move_strength(int cur_score, int score_after) const {
 
 	}
 
-	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+	std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 	system("cls");
 
 }
@@ -128,22 +148,25 @@ void command_control::print_move() const {
 
 	printf("\033[%d;%dH", 22, 0);
 }
-//command informing about game finish
-bool command_control::end_game(bool is_draw, int index) {
-	if (is_draw) {
-		std::cout << "\nIt is a draw!";
+void command_control::print_previous_results( game_results_container<std::string>& winners,  game_results_container<int>& game_lengths) const{
+
+	// Print headers
+	std::cout << "Game|Winner    |Game length" << std::endl;
+
+	// Print winners side by side
+	for (size_t i = 0; i < winners.size(); ++i) {
+		std::cout << i+1 << "  ";
+		if (i <= 9) {
+			std::cout << " ";
+		}
+		std::cout << winners.get_data(i);
+		for (int s = int(winners.get_data(i).length()); s < 10; s++) {
+			std::cout << " ";
+		}
+		std::cout << game_lengths.get_data(i) << "\n";
+
 	}
-	else {
-		std::cout << "\nPlayer " << players[index] << " has won!!";
-	}
-	std::cout << " Do you want to play once again?\n Press \"y\" if so. Otherwise press anything but \"y\" ";
-	char l;
-	std::cin >> l;
-	if (l == 'y') {
-		return true;
-	}
-	else {
-		return false;
-	}
-	system("cls");
+
 }
+
+

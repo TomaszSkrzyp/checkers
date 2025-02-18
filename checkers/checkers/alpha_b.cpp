@@ -2,17 +2,7 @@
 /*finding best move algorythm*/
 #include "alpha_beta.h"
 int alpha_beta::algorythm(std::unique_ptr<board>& b, int depth, int alpha, int beta) {
-	/*if (depth == 0) {
-		std::cout << "\n"<<depth;
-		reached_end = true;
-		cur_depth = max_depth;
-		if (b->get_turn() == 'b') {
-			return std::numeric_limits<int>::max();
-		}
-		else {
-			return std::numeric_limits<int>::min();
-		}
-	}*/
+	
 	reached_end = false;
 	if (depth == 0) {
 
@@ -31,13 +21,9 @@ int alpha_beta::algorythm(std::unique_ptr<board>& b, int depth, int alpha, int b
 		for (; it != (m_list).end(); ++it) {
 
 
-
 			(*b).make_move(*it);
 			std::unique_ptr<board> new_board(new board(*b));
 			int value = algorythm(new_board, depth - 1, alpha, std::min(localbeta, beta));
-			/*std::cout << "\n" << value << " value of move: ";
-			print_move(*it);
-			std::cout << "\n";*/
 			(*b).undo_move();
 			if (value > alpha) {
 				alpha = value;
@@ -62,6 +48,7 @@ int alpha_beta::algorythm(std::unique_ptr<board>& b, int depth, int alpha, int b
 			}
 
 		}
+
 		while (!m_list.empty()) {
 			delete m_list.front();
 			m_list.pop_front();
@@ -70,22 +57,15 @@ int alpha_beta::algorythm(std::unique_ptr<board>& b, int depth, int alpha, int b
 		if (depth == max_depth) {
 			cur_depth = depth;
 		}
-
 		return alpha;
-
-
 	}
+
 	else if (b->get_turn() == 'b') {
 		for (; it != (m_list).end(); ++it) {
-
-
-
 			(*b).make_move(*it);
 			std::unique_ptr<board> new_board(new board(*b));
 			int value = algorythm(new_board, depth - 1, std::max(localalpha, alpha), beta);
-			/*std::cout << "\n" << value << " value of move: ";
-			print_move(*it);
-			std::cout << "\n";*/
+		
 			(*b).undo_move();
 			if (value < beta) {
 				beta = value;

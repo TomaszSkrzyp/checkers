@@ -1,34 +1,38 @@
 #include "alpha_beta.h"
 int alpha_beta::evaluate_score(const board& b) {
-	int score = 0;
-	
+	int white_score = 0;
+	int black_score = 0;
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 4; j++) {
 			if (tolower(b.get_piece(i, j)) == 'w') {
 				if (b.get_piece(i, j) == 'W') {
-					score += 2*(100+10*(i));
+					white_score += 3*(100+10*(i));
 				}
-				score += 100;
+				white_score += 100;
 				if (on_wall(i, j)) {
-					score += 3 * (7 - i);
+					white_score += 3 * (7 - i);
 				}
 
 			}
 			else if (tolower(b.get_piece(i, j)) == 'b') {
 				if (b.get_piece(i, j) == 'B') {
-					score -= 2 * (100 + 10 * (7-i));
+					black_score -= 3 * (100 + 10 * (7-i));
 				}
-				score -= 100;
+				black_score -= 100;
 				if (on_wall(i, j)) {
-					score -= 5 * i;
+					black_score -= 5 * i;
 				}
-
-
 
 			}
 		}
 	}
-	return score;
+	if (black_score == 0) {
+		return 100000;
+	}
+	else if (white_score == 0) {
+		return -100000;
+	}
+	return white_score+black_score;
 }
 
 bool alpha_beta::load_moves(std::list<move*>& moves, board_moves& move_finder, const board& new_board) {
@@ -63,9 +67,11 @@ bool alpha_beta::on_wall(int x, int y) {
 	}
 	return false;
 }
-move* alpha_beta::get_best_move() {
-	std::cout << "\nBEST MOVE IN POSI: ";
-	print_move(bestM);
+move* alpha_beta::get_best_move(bool print) {
+	if (print) {
+		std::cout << "\nBEST MOVE IN POSI: ";
+		print_move(bestM);
+	}
 	return bestM;
 }
 void alpha_beta::print_move(move* v) {
