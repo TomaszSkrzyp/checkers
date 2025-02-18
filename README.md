@@ -41,9 +41,12 @@ After compiling, run the executable with:
  IF USING VISUAL STUDIO:
  
 -Open the .sln File
+
 -Double-click on the Checkers.sln file.
--Set the Entry Point
+
+-Set the Entry Point:
      Make sure main.cpp is set as the Startup File (Right-click → Set as Startup Item).
+     
 -Click on the "Build Solution" (Shortcut: Ctrl + Shift + B).
 
 **Game Setup**
