@@ -29,11 +29,13 @@ A terminal or command prompt
 To compile the game, use the following command in the terminal:
 
  g++ -o checkers main.cpp checkers.cpp ai.cpp -std=c++11
+ 
 After compiling, run the executable with:
 
  ./checkers
 
  IF USING VISUAL STUDIO:
+ 
 Open the .sln File
 Double-click on the Checkers.sln file.
 Set the Entry Point
