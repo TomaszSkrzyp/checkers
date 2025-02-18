@@ -25,7 +25,7 @@ A terminal or command prompt
 
 **Compilation and running**
 
- **IF NOT USING VISUAL STUDIO:**
+ IF NOT USING VISUAL STUDIO:
  
 To compile the game, use the following command in the terminal:
 
@@ -38,13 +38,13 @@ After compiling, run the executable with:
  ./checkers
 ```
 
- **IF USING VISUAL STUDIO:**
+ IF USING VISUAL STUDIO:
  
-Open the .sln File
-Double-click on the Checkers.sln file.
-Set the Entry Point
-Make sure main.cpp is set as the Startup File (Right-click → Set as Startup Item).
-Click on the "Build Solution" (Shortcut: Ctrl + Shift + B).
+-Open the .sln File
+-Double-click on the Checkers.sln file.
+-Set the Entry Point
+     Make sure main.cpp is set as the Startup File (Right-click → Set as Startup Item).
+-Click on the "Build Solution" (Shortcut: Ctrl + Shift + B).
 
 **Game Setup**
 
