@@ -51,7 +51,7 @@ After compiling, run the executable with:
 
 **Game Setup**
 
-To choose which player is a computer and eventual level of computer, change values in game object constuctor in checkers.cpp inside main()
+To choose which player is a computer and eventual level of computer, change values in "game" object constuctor in main() inside checkers.cpp
 EXAMPLE:
 ```sh
   game(false,0,true,5);
@@ -74,7 +74,12 @@ Regular pieces move diagonally forward; kings move diagonally in both directions
 
 Capturing is mandatory when possible.
 
-The game ends when a player has no moves left.
+The game ends when a player has no moves left or turn number reaches max turn.
+By default, it is set to 50. In this situation, the score will be drawn. 
+It is, however, customizable. To do so one must change the value 
+of the parameter of game::start function inside checkers.cpp
+Game results and lengths are kept and displayed at the end of each game.
+
 
 **AI Implementation**
 
